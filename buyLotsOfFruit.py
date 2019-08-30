@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -23,6 +23,7 @@ the script should produce the output:
 Cost of [('apples', 2.0), ('pears', 3.0), ('limes', 4.0)] is 12.25
 """
 from __future__ import print_function
+from functools import reduce
 
 fruitPrices = {'apples': 2.00, 'oranges': 1.50, 'pears': 1.75,
                'limes': 0.75, 'strawberries': 1.00}
@@ -35,7 +36,17 @@ def buyLotsOfFruit(orderList):
     Returns cost of order
     """
     totalCost = 0.0
-    "*** YOUR CODE HERE ***"
+
+    try:
+        totalCost = reduce(
+            lambda t, i: t + fruitPrices[i[0]] * i[1],
+            orderList,
+            0
+        )
+    except KeyError as e:
+        print("invalid fruit %s given" % e)
+        return None
+
     return totalCost
 
 
